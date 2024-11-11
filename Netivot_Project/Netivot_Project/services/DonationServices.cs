@@ -4,46 +4,49 @@ namespace Netivot_Project.entities
 {
     public class DonationServices
     {
-        List<DonationEntity> Donations;
         public List<DonationEntity> GetAllDonations()
         {
-            return Donations;
+            return DataManager.dataContexts.donations;
         }
         public DonationEntity GetDonationById(int id)
         {
-            if (Donations == null)
-                return null;
-            return Donations.Find(d => d.Id == id);
+            return DataManager.dataContexts.donations.Find(d => d.Id == id);
         }
-        public bool PostDonation(DonationEntity donation)
+        public bool AddDonation(DonationEntity donation)
         {
-            if (Donations == null)
-                Donations = new List<DonationEntity>();
-            if (donation == null || Donations.Exists(d => d.Id == donation.Id))
+            if (DataManager.dataContexts.donations == null)
+            {
+                DataManager.dataContexts.donations = new List<DonationEntity>();
+                DataManager.dataContexts.donations.Add(new DonationEntity(3,3,new DateTime(),10,ActiveStatusEnum.Active));
+            }
+            if (donation == null || DataManager.dataContexts.donations.Exists(d => d.Id == donation.Id))
                 return false;
-            Donations.Add(new DonationEntity(donation));
+            DataManager.dataContexts.donations.Add(new DonationEntity(donation));
             return true;
         }
-        public bool PutDonation(int id, DonationEntity donation)
+        public bool UpdateDonation(int id, DonationEntity donation)
         {
-            if (Donations == null || donation == null)
+            if (DataManager.dataContexts.donations == null || donation == null)
                 return false;
-            int i = Donations.FindIndex(d => d.Id == id);
-            Donations[i] = new DonationEntity(donation);
+            int i = DataManager.dataContexts.donations.FindIndex(d => d.Id == id);
+            DataManager.dataContexts.donations[i].IdDonor = donation.IdDonor;
+            DataManager.dataContexts.donations[i].Date = donation.Date;
+            DataManager.dataContexts.donations[i].Sum = donation.Sum;
+            DataManager.dataContexts.donations[i].DonationStatus = donation.DonationStatus;
             return true;
         }
         public bool DeleteDonation(int id)
         {
-            if (Donations == null || !Donations.Exists(d => d.Id == id))
+            if (DataManager.dataContexts.donations == null || !DataManager.dataContexts.donations.Exists(d => d.Id == id))
                 return false;
-            Donations.Remove(GetDonationById(id));
+            DataManager.dataContexts.donations.Remove(GetDonationById(id));
             return true;
         }
         public DonationEntity GetDonationByDate(DateOnly date)
         {
-            if (Donations == null)
+            if (DataManager.dataContexts.donations == null)
                 return null;
-            return Donations.Find(d => d.Date.CompareTo( date)==0);
+            return DataManager.dataContexts.donations.Find(d => d.Date.CompareTo( date)==0);
         }
 
     }

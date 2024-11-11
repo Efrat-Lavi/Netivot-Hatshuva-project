@@ -9,48 +9,48 @@ namespace Netivot_Project.Controllers
     public class DonorController : Controller
     {
         DonorServices donorServices = new DonorServices();
-        // GET: api/<MitchzekController>
+        // GET: api/<DonorController>
         [HttpGet]
-        public ActionResult Get()
+        public ActionResult<List<DonorEntity>> Get()
         {
             List<DonorEntity> donors = donorServices.GetAllDonors();
             if (donors == null)
                 return NotFound();
-            return Ok(donors);
+            return donors;
         }
 
-        // GET api/<MitchzekController>/5
+        // GET api/<DonorController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public ActionResult<DonorEntity> Get(int id)
         {
             DonorEntity donor = donorServices.GetDonorById(id);
             if (donor == null)
                 return NotFound();
-            return Ok(donor);
+            return donor;
         }
 
-        // POST api/<MitchzekController>
+        // POST api/<DonorController>
         [HttpPost]
-        public ActionResult Post([FromBody] DonorEntity value)
+        public ActionResult<bool> Post([FromBody] DonorEntity value)
         {
-            bool isSuccess = donorServices.PostDonor(value);
-            return isSuccess ? Ok(true) : NotFound();
+            bool isSuccess = donorServices.AddDonor(value);
+            return isSuccess ? true : false;
         }
 
-        // PUT api/<MitchzekController>/5
+        // PUT api/<DonorController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] DonorEntity value)
+        public ActionResult<bool> Put(int id, [FromBody] DonorEntity value)
         {
-            bool isSuccess = donorServices.PutDonor(id, value);
-            return isSuccess ? Ok(true) : NotFound();
+            bool isSuccess = donorServices.UpdateDonor(id, value);
+            return isSuccess ? true : false;
         }
 
-        // DELETE api/<MitchzekController>/5
+        // DELETE api/<DonorController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult<bool> Delete(int id)
         {
             bool isSuccess = donorServices.DeleteDonor(id);
-            return isSuccess ? Ok(true) : NotFound();
+            return isSuccess ? true : false;
         }
     }
 }

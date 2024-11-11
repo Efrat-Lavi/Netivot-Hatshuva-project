@@ -2,46 +2,50 @@
 {
     public class DonorServices
     {
-        List<DonorEntity> donors;
         public List<DonorEntity> GetAllDonors()
         {
-            return donors;
+            return DataManager.dataContexts.donors;
         }
         public DonorEntity GetDonorById(int id)
         {
-            if (donors == null)
+            if (DataManager.dataContexts.donors == null)
                 return null;
-            return donors.Find(d => d.Id == id);
+            return DataManager.dataContexts.donors.Find(d => d.Id == id);
         }
-        public bool PostDonor(DonorEntity donor)
+        public bool AddDonor(DonorEntity donor)
         {
-            if (donors == null)
-                donors = new List<DonorEntity>();
-            if (donor == null || donors.Exists(d => d.Id == donor.Id))
+            if (DataManager.dataContexts.donors == null)
+                DataManager.dataContexts.donors = new List<DonorEntity>();
+            if (donor == null || DataManager.dataContexts.donors.Exists(d => d.Id == donor.Id))
                 return false;
-            donors.Add(new DonorEntity(donor));
+            DataManager.dataContexts.donors.Add(new DonorEntity(donor));
             return true;
         }
-        public bool PutDonor(int id, DonorEntity donor)
+        public bool UpdateDonor(int id, DonorEntity donor)
         {
-            if (donors == null || donor == null)
+            if (DataManager.dataContexts.donors == null || donor == null)
                 return false;
-            int i = donors.FindIndex(d => d.Id == id);
-            donors[i] = new DonorEntity(donor);
+            int i = DataManager.dataContexts.donors.FindIndex(d => d.Id == id);
+            DataManager.dataContexts.donors[i].FirstName = donor.FirstName;
+            DataManager.dataContexts.donors[i].LastName = donor.LastName;
+            DataManager.dataContexts.donors[i].Email = donor.Email;
+            DataManager.dataContexts.donors[i].PhoneNumber = donor.PhoneNumber;
+            DataManager.dataContexts.donors[i].DonorStatus = donor.DonorStatus;
+            DataManager.dataContexts.donors[i].LastDonation = donor.LastDonation;
             return true;
         }
         public bool DeleteDonor(int id)
         {
-            if (donors == null || !donors.Exists(d => d.Id == id))
+            if (DataManager.dataContexts.donors == null || !DataManager.dataContexts.donors.Exists(d => d.Id == id))
                 return false;
-            donors.Remove(GetDonorById(id));
+            DataManager.dataContexts.donors.Remove(GetDonorById(id));
             return true;
         }
         public DonorEntity GetDonorByName(string firstName)
         {
-            if (donors == null)
+            if (DataManager.dataContexts.donors == null)
                 return null;
-            return donors.Find(d => d.FirstName == firstName);
+            return DataManager.dataContexts.donors.Find(d => d.FirstName == firstName);
         }
     }
 }

@@ -9,48 +9,48 @@ namespace Netivot_Project.Controllers
     public class AvrechController : ControllerBase
     {
         AvrechServices avrechServices = new AvrechServices();
-        // GET: api/<MitchzekController>
+        // GET: api/<AvrechController>
         [HttpGet]
-        public ActionResult Get()
+        public ActionResult<List<AvrechEntity>> Get()
         {
             List<AvrechEntity> avrechim = avrechServices.GetAllAvrechim();
             if (avrechim == null)
                 return NotFound();
-            return Ok(avrechim);
+            return avrechim;
         }
 
-        // GET api/<MitchzekController>/5
+        // GET api/<AvrechController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public ActionResult<AvrechEntity> Get(int id)
         {
             AvrechEntity mitchazek = avrechServices.GetAvrechById(id);
             if (mitchazek == null)
                 return NotFound();
-            return Ok(mitchazek);
+            return mitchazek;
         }
 
-        // POST api/<MitchzekController>
+        // POST api/<AvrechController>
         [HttpPost]
-        public ActionResult Post([FromBody] AvrechEntity value)
+        public ActionResult<bool> Post([FromBody] AvrechEntity value)
         {
-            bool isSuccess = avrechServices.PostAvrech(value);
-            return isSuccess ? Ok(true) : NotFound();
+            bool isSuccess = avrechServices.AddAvrech(value);
+            return isSuccess ? true : false;
         }
 
-        // PUT api/<MitchzekController>/5
+        // PUT api/<AvrechController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] AvrechEntity value)
+        public ActionResult<bool> Put(int id, [FromBody] AvrechEntity value)
         {
-            bool isSuccess = avrechServices.PutAvrech(id, value);
-            return isSuccess ? Ok(true) : NotFound();
+            bool isSuccess = avrechServices.UpdateAvrech(id, value);
+            return isSuccess ? true : false;
         }
 
-        // DELETE api/<MitchzekController>/5
+        // DELETE api/<AvrechController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult<bool> Delete(int id)
         {
             bool isSuccess = avrechServices.DeleteAvrech(id);
-            return isSuccess ? Ok(true) : NotFound();
+            return isSuccess ? true : false;
         }
     }
 }

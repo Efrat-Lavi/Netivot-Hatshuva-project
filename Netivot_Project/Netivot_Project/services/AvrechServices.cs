@@ -1,49 +1,57 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Reflection;
 
 namespace Netivot_Project.entities
 {
     public class AvrechServices
     {
-        static List<AvrechEntity> avrechim;
         public List<AvrechEntity> GetAllAvrechim()
         {
-            return avrechim;
+            return DataManager.dataContexts.avrechim;
         }
         public AvrechEntity GetAvrechById(int id)
         {
-            if (avrechim == null)
+            if (DataManager.dataContexts.avrechim == null)
                 return null;
-            return avrechim.Find(a=>a.Id == id);
+            return DataManager.dataContexts.avrechim.Find(a=>a.Id == id);
         }
-        public bool PostAvrech(AvrechEntity avrech)
+        public bool AddAvrech(AvrechEntity avrech)
         {
-            if (avrechim == null)
-                avrechim = new List<AvrechEntity>();
-            if (avrech == null || avrechim.Exists(a => a.Id == avrech.Id))
+            if (DataManager.dataContexts.avrechim == null)
+                DataManager.dataContexts.avrechim = new List<AvrechEntity>();
+            if (avrech == null || DataManager.dataContexts.avrechim.Exists(a => a.Id == avrech.Id))
                 return false;
-            avrechim.Add(new AvrechEntity (avrech));
+            DataManager.dataContexts.avrechim.Add(new AvrechEntity (avrech));
             return true;
         }
-        public bool PutAvrech(int id, AvrechEntity avrech)
+        public bool UpdateAvrech(int id, AvrechEntity avrech)
         {
-            if (avrechim == null || avrech == null)
+            if (DataManager.dataContexts.avrechim == null || avrech == null)
                 return false;
-            int i = avrechim.FindIndex(a => a.Id == id);
-            avrechim[i] = new AvrechEntity(avrech);
+            int i = DataManager.dataContexts.avrechim.FindIndex(a => a.Id == id);
+            DataManager.dataContexts.avrechim[i].FirstName = avrech.FirstName;
+            DataManager.dataContexts.avrechim[i].LastName = avrech.LastName;
+            DataManager.dataContexts.avrechim[i].Gender = avrech.Gender;
+            DataManager.dataContexts.avrechim[i].Age = avrech.Age;
+            DataManager.dataContexts.avrechim[i].Email = avrech.Email;
+            DataManager.dataContexts.avrechim[i].PhoneNumber = avrech.PhoneNumber;
+            DataManager.dataContexts.avrechim[i].WorkStatus = avrech.WorkStatus;
+            DataManager.dataContexts.avrechim[i].JobDay = avrech.JobDay;
             return true;
         }
         public bool DeleteAvrech(int id)
         {
-            if (avrechim == null || !avrechim.Exists(a => a.Id == id))
+            if (DataManager.dataContexts.avrechim == null || !DataManager.dataContexts.avrechim.Exists(a => a.Id == id))
                 return false;
-            avrechim.Remove(GetAvrechById(id));
+            DataManager.dataContexts.avrechim.Remove(GetAvrechById(id));
             return true;
         }
         public AvrechEntity GetAvrechByName(string firstName)
         {
-            if (avrechim == null)
+            if (DataManager.dataContexts.avrechim == null)
                 return null;
-            return avrechim.Find(a => a.FirstName == firstName);
+            return DataManager.dataContexts.avrechim.Find(a => a.FirstName == firstName);
         }
     }
 }

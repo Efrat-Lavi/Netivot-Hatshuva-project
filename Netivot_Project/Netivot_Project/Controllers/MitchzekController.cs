@@ -12,46 +12,46 @@ namespace Netivot_Project.Controllers
         MitchazekServices mitchazekServices=new MitchazekServices();
         // GET: api/<MitchzekController>
         [HttpGet]
-        public ActionResult Get()
+        public ActionResult<List<MitchazekEntity>> Get()
         {
             List<MitchazekEntity> mitchazkim = mitchazekServices.GetAllMitchazkim();
             if (mitchazkim == null)
                 return NotFound();
-            return Ok(mitchazkim);
+            return mitchazkim;
         }
 
         // GET api/<MitchzekController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public ActionResult<MitchazekEntity> Get(int id)
         {
             MitchazekEntity mitchazek = mitchazekServices.GetMitchazekById(id);
             if (mitchazek == null)
                 return NotFound();
-            return Ok(mitchazek);
+            return mitchazek;
         }
 
         // POST api/<MitchzekController>
         [HttpPost]
-        public ActionResult Post([FromBody] MitchazekEntity value)
+        public ActionResult<bool> Post([FromBody] MitchazekEntity value)
         {
-            bool isSuccess = mitchazekServices.PostMitchazek(value);
-            return isSuccess ? Ok(true):NotFound();
+            bool isSuccess = mitchazekServices.AddMitchazek(value);
+            return isSuccess ? true: false;
         }
 
         // PUT api/<MitchzekController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] MitchazekEntity value)
+        public ActionResult<bool> Put(int id, [FromBody] MitchazekEntity value)
         {
-            bool isSuccess = mitchazekServices.PutMitchazek(id,value);
-            return isSuccess ? Ok(true) : NotFound();
+            bool isSuccess = mitchazekServices.UpdateMitchazek(id,value);
+            return isSuccess ? true : false;
         }
 
         // DELETE api/<MitchzekController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult<bool> Delete(int id)
         {
             bool isSuccess = mitchazekServices.DeleteMitchazek(id);
-            return isSuccess ? Ok(true) : NotFound();
+            return isSuccess ? true : false;
         }
     }
 }

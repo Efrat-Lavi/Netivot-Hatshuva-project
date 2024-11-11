@@ -4,46 +4,48 @@ namespace Netivot_Project.entities
 {
     public class MeetingServices
     {
-        List<MeetingEntity> Meetings;
         public List<MeetingEntity> GetAllMeeting()
         {
-            return Meetings;
+            return DataManager.dataContexts.meetings;
         }
         public MeetingEntity GetMeetingById(int id)
         {
-            if (Meetings == null)
+            if (DataManager.dataContexts.meetings == null)
                 return null;
-            return Meetings.Find(m => m.Id == id);
+            return DataManager.dataContexts.meetings.Find(m => m.Id == id);
         }
-        public bool PostMeeting(MeetingEntity meeting)
+        public bool AddMeeting(MeetingEntity meeting)
         {
-            if (Meetings == null)
-                Meetings = new List<MeetingEntity>();
-            if (meeting == null || Meetings.Exists(m => m.Id == meeting.Id))
+            if (DataManager.dataContexts.meetings == null)
+                DataManager.dataContexts.meetings = new List<MeetingEntity>();
+            if (meeting == null || DataManager.dataContexts.meetings.Exists(m => m.Id == meeting.Id))
                 return false;
-            Meetings.Add(new MeetingEntity(meeting));
+            DataManager.dataContexts.meetings.Add(new MeetingEntity(meeting));
             return true;
         }
-        public bool PutMeeting(int id, MeetingEntity meeting)
+        public bool UpdateMeeting(int id, MeetingEntity meeting)
         {
-            if (Meetings == null || meeting == null)
+            if (DataManager.dataContexts.meetings == null || meeting == null)
                 return false;
-            int i = Meetings.FindIndex(m => m.Id == id);
-            Meetings[i] = new MeetingEntity(meeting);
+            int i = DataManager.dataContexts.meetings.FindIndex(m => m.Id == id);
+            DataManager.dataContexts.meetings[i].Date = meeting.Date;
+            DataManager.dataContexts.meetings[i].Avrech = meeting.Avrech;
+            DataManager.dataContexts.meetings[i].Mitchazek = meeting.Mitchazek;
+            DataManager.dataContexts.meetings[i].Subject = meeting.Subject;
             return true;
         }
         public bool DeleteMeeting(int id)
         {
-            if (Meetings == null || !Meetings.Exists(m => m.Id == id))
+            if (DataManager.dataContexts.meetings == null || !DataManager.dataContexts.meetings.Exists(m => m.Id == id))
                 return false;
-            Meetings.Remove(GetMeetingById(id));
+            DataManager.dataContexts.meetings.Remove(GetMeetingById(id));
             return true;
         }
         public MeetingEntity GetMeetingByDate(DateOnly date)
         {
-            if (Meetings == null)
+            if (DataManager.dataContexts.meetings == null)
                 return null;
-            return Meetings.Find(m => m.Date == date);
+            return DataManager.dataContexts.meetings.Find(m => m.Date == date);
         }
 
     }

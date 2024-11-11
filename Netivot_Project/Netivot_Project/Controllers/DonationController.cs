@@ -10,50 +10,50 @@ namespace Netivot_Project.Controllers
     {
         // GET: DonationController
         DonationServices donationServices = new DonationServices();
-        // GET: api/<MitchzekController>
+        // GET: api/<DonationController>
         [HttpGet]
-        public ActionResult Get()
+        public ActionResult<List<DonationEntity>> Get()
         {
             List<DonationEntity> donations = donationServices.GetAllDonations();
-            if (donations == null)
-                return NotFound();
-            return Ok(donations);
+            //if (donations == null)
+            //    return NotFound();
+            return donations;
         }
-       
+    
 
 
-        // GET api/<MitchzekController>/5
+        // GET api/<DonationController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public ActionResult<DonationEntity> Get(int id)
         {
             DonationEntity donation = donationServices.GetDonationById(id);
             if (donation == null)
                 return NotFound();
-            return Ok(donation);
+            return donation;
         }
 
-        // POST api/<MitchzekController>
+        // POST api/<DonationController>
         [HttpPost]
-        public ActionResult Post([FromBody] DonationEntity value)
+        public ActionResult<bool> Post([FromBody] DonationEntity value)
         {
-            bool isSuccess = donationServices.PostDonation(value);
-            return isSuccess ? Ok(true) : NotFound();
+            bool isSuccess = donationServices.AddDonation(value);
+            return isSuccess ? true : false;
         }
 
-        // PUT api/<MitchzekController>/5
+        // PUT api/<DonationController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] DonationEntity value)
+        public ActionResult<bool> Put(int id, [FromBody] DonationEntity value)
         {
-            bool isSuccess = donationServices.PutDonation(id, value);
-            return isSuccess ? Ok(true) : NotFound();
+            bool isSuccess = donationServices.UpdateDonation(id, value);
+            return isSuccess ? true : false;
         }
 
-        // DELETE api/<MitchzekController>/5
+        // DELETE api/<DonationController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult<bool> Delete(int id)
         {
             bool isSuccess = donationServices.DeleteDonation(id);
-            return isSuccess ? Ok(true) : NotFound();
+            return isSuccess ? true : false;
         }
     }
 }
