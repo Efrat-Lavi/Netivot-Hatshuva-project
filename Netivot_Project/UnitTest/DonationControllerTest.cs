@@ -42,7 +42,7 @@ namespace UnitTest
         [Fact]
         public void Get_ReturnUsers()
         {
-            var id = 1;
+            var id = 3;
             var controller = new DonationController();
             var result = controller.Get(id);
             Assert.IsType<ActionResult<DonationEntity>>(result);

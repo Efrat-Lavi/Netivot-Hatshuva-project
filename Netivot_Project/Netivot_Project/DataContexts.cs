@@ -1,4 +1,5 @@
 ﻿using Netivot_Project.entities;
+using Netivot_Project.Enums;
 
 namespace Netivot_Project
 {
@@ -12,11 +13,9 @@ namespace Netivot_Project
 
         public DataContexts()
         {
-            //avrechim = new List<AvrechEntity>();
-            //donations = new List<DonationEntity>();
-            //donors = new List<DonorEntity>();
-            //meetings = new List<MeetingEntity>();
-            //mitchazkim = new List<MitchazekEntity>();
+            donations = new List<DonationEntity>();
+            donations.Add(new DonationEntity(3, 3, new DateTime(), 10, ActiveStatusEnum.Active));
+
         }
     }
 }

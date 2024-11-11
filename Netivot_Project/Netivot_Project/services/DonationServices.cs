@@ -15,10 +15,7 @@ namespace Netivot_Project.entities
         public bool AddDonation(DonationEntity donation)
         {
             if (DataManager.dataContexts.donations == null)
-            {
                 DataManager.dataContexts.donations = new List<DonationEntity>();
-                DataManager.dataContexts.donations.Add(new DonationEntity(3,3,new DateTime(),10,ActiveStatusEnum.Active));
-            }
             if (donation == null || DataManager.dataContexts.donations.Exists(d => d.Id == donation.Id))
                 return false;
             DataManager.dataContexts.donations.Add(new DonationEntity(donation));
