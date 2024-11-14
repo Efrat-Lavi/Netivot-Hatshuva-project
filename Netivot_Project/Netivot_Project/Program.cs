@@ -1,8 +1,14 @@
+using Netivot_Project;
+using Netivot_Project.entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 
 // Add services to the container.
+builder.Services.AddTransient<DonationServices>();
+builder.Services.AddTransient<IDataContextDonation, DateConextDonation>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -17,7 +17,7 @@ namespace UnitTest
         {
             var controller = new DonationController();
             var result = controller.Get();
-            Assert.IsType<ActionResult<List<DonationEntity>>>(result);
+            Assert.IsType<ActionResult<List<DonationEntity>>>(result.Result);
 
         }
         [Fact]
@@ -45,7 +45,7 @@ namespace UnitTest
             var id = 3;
             var controller = new DonationController();
             var result = controller.Get(id);
-            Assert.IsType<ActionResult<DonationEntity>>(result);
+            Assert.IsType<ActionResult<DonationEntity>>(result.Result);
         }
 
 

@@ -9,12 +9,18 @@ namespace Netivot_Project.Controllers
     public class DonationController : Controller
     {
         // GET: DonationController
-        DonationServices donationServices = new DonationServices();
+        readonly DonationServices _donationService;
+        public DonationController(DonationServices donationService)
+        {
+            _donationService = donationService;
+        }
         // GET: api/<DonationController>
         [HttpGet]
         public ActionResult<List<DonationEntity>> Get()
         {
-            List<DonationEntity> donations = donationServices.GetAllDonations();
+            List<DonationEntity> donations = _donationService.GetAllDonations();
+            if (donations == null)
+                Console.WriteLine("***");
             //if (donations == null)
             //    return NotFound();
             return donations;
@@ -26,7 +32,7 @@ namespace Netivot_Project.Controllers
         [HttpGet("{id}")]
         public ActionResult<DonationEntity> Get(int id)
         {
-            DonationEntity donation = donationServices.GetDonationById(id);
+            DonationEntity donation = _donationService.GetDonationById(id);
             if (donation == null)
                 return NotFound();
             return donation;
@@ -36,7 +42,7 @@ namespace Netivot_Project.Controllers
         [HttpPost]
         public ActionResult<bool> Post([FromBody] DonationEntity value)
         {
-            bool isSuccess = donationServices.AddDonation(value);
+            bool isSuccess = _donationService.AddDonation(value);
             return isSuccess ? true : false;
         }
 
@@ -44,7 +50,7 @@ namespace Netivot_Project.Controllers
         [HttpPut("{id}")]
         public ActionResult<bool> Put(int id, [FromBody] DonationEntity value)
         {
-            bool isSuccess = donationServices.UpdateDonation(id, value);
+            bool isSuccess = _donationService.UpdateDonation(id, value);
             return isSuccess ? true : false;
         }
 
@@ -52,7 +58,7 @@ namespace Netivot_Project.Controllers
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(int id)
         {
-            bool isSuccess = donationServices.DeleteDonation(id);
+            bool isSuccess = _donationService.DeleteDonation(id);
             return isSuccess ? true : false;
         }
     }

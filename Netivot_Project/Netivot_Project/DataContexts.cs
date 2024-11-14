@@ -1,5 +1,11 @@
-﻿using Netivot_Project.entities;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using Microsoft.Extensions.Logging;
+using Netivot_Project.entities;
 using Netivot_Project.Enums;
+using System.Formats.Asn1;
+using System.Globalization;
+using System.Text.Json;
 
 namespace Netivot_Project
 {
@@ -14,8 +20,10 @@ namespace Netivot_Project
         public DataContexts()
         {
             donations = new List<DonationEntity>();
-            donations.Add(new DonationEntity(3, 3, new DateTime(), 10, ActiveStatusEnum.Active));
+
 
         }
+
+
     }
 }
