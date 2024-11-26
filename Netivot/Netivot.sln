@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netivot.API", "Netivot.API\Netivot.API.csproj", "{D771860B-10C1-4C03-ABE2-EB912E734AC5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netivot.Data", "Netivot.Data\Netivot.Data.csproj", "{43D4872B-5FE4-4301-8BAE-4BA6CCBB8323}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netivot.Core", "Netivot.core\Netivot.Core\Netivot.Core.csproj", "{CE0A1D23-94AE-4EA0-9D85-73FF69B0C8A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netivot.Service", "Netivot.Servics\Netivot.Service.csproj", "{6D998A6A-BB3F-4CD9-97C0-C715B06E2886}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D771860B-10C1-4C03-ABE2-EB912E734AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D771860B-10C1-4C03-ABE2-EB912E734AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D771860B-10C1-4C03-ABE2-EB912E734AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D771860B-10C1-4C03-ABE2-EB912E734AC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43D4872B-5FE4-4301-8BAE-4BA6CCBB8323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43D4872B-5FE4-4301-8BAE-4BA6CCBB8323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43D4872B-5FE4-4301-8BAE-4BA6CCBB8323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43D4872B-5FE4-4301-8BAE-4BA6CCBB8323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0A1D23-94AE-4EA0-9D85-73FF69B0C8A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0A1D23-94AE-4EA0-9D85-73FF69B0C8A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0A1D23-94AE-4EA0-9D85-73FF69B0C8A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0A1D23-94AE-4EA0-9D85-73FF69B0C8A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D998A6A-BB3F-4CD9-97C0-C715B06E2886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D998A6A-BB3F-4CD9-97C0-C715B06E2886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D998A6A-BB3F-4CD9-97C0-C715B06E2886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D998A6A-BB3F-4CD9-97C0-C715B06E2886}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {00CBE007-EB73-465A-B6BE-B45BB7FE192A}
+	EndGlobalSection
+EndGlobal

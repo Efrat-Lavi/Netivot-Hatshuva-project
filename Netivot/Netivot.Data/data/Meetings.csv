@@ -1,0 +1,21 @@
+Id,Date,Avrech,Mitchazek,Subject
+1,01/01/2020,"{
+  ""Id"": 1,
+  ""FirstName"": ""John"",
+  ""LastName"": ""Doe"",
+  ""Gender"": 1,
+  ""Age"": 30,
+  ""Email"": ""john.doe@example.com"",
+  ""PhoneNumber"": ""123-456-7890"",
+  ""WorkStatus"": 1,
+  ""JobDay"": 1}
+","{
+  ""Id"": 1,
+  ""FirstName"": ""John"",
+  ""LastName"": ""Doe"",
+  ""Gender"": 1,
+  ""Age"": 30,
+  ""Email"": ""john.doe@example.com"",
+  ""PhoneNumber"": ""123-456-7890"",
+  ""WorkStatus"": 1,
+  ""JobDay"": 1}",gmara
