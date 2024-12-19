@@ -17,50 +17,63 @@ namespace Netivot.Data.Repositories
         }
         public List<DonorEntity> GetAll()
         {
-            return _dataContext.donors;
+            return _dataContext.donors.ToList();
         }
         public DonorEntity GetById(int id)
         {
             if (_dataContext.donors == null)
                 return null;
-            return _dataContext.donors.Find(d => d.Id == id);
+            return _dataContext.donors.Find(id);
         }
         public bool Add(DonorEntity donor)
         {
-            if (_dataContext.donors == null)
-                _dataContext.donors = new List<DonorEntity>();
-            if (donor == null || _dataContext.donors.Exists(d => d.Id == donor.Id))
+            if (donor == null || _dataContext.donors.Find(donor.Id) != null)
                 return false;
             _dataContext.donors.Add(new DonorEntity(donor));
-            return _dataContext.Save<DonorEntity>(_dataContext.donors, "Donors.csv"); ;
+            try
+            {
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
         public bool Update(int id, DonorEntity donor)
         {
             if (_dataContext.donors == null || donor == null)
                 return false;
-            int i = _dataContext.donors.FindIndex(d => d.Id == id);
-            if (i == -1)
+            DonorEntity d = _dataContext.donors.Find(id);
+            if (d == null)
                 return false;
-            _dataContext.donors[i].FirstName = donor.FirstName;
-            _dataContext.donors[i].LastName = donor.LastName;
-            _dataContext.donors[i].Email = donor.Email;
-            _dataContext.donors[i].PhoneNumber = donor.PhoneNumber;
-            _dataContext.donors[i].DonorStatus = donor.DonorStatus;
-            _dataContext.donors[i].LastDonation = donor.LastDonation;
-            return _dataContext.Save<DonorEntity>(_dataContext.donors, "Donors.csv"); ;
+            d.FirstName = donor.FirstName;
+            d.LastName = donor.LastName;
+            d.Email = donor.Email;
+            d.PhoneNumber = donor.PhoneNumber;
+            d.DonorStatus = donor.DonorStatus;
+            d.LastDonation = donor.LastDonation;
+            try
+            {
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
         public bool Delete(int id)
         {
-            if (_dataContext.donors == null || !_dataContext.donors.Exists(d => d.Id == id))
+            if (_dataContext.donors == null || _dataContext.donors.Find(id) != null)
                 return false;
             _dataContext.donors.Remove(GetById(id));
-            return _dataContext.Save<DonorEntity>(_dataContext.donors, "Donors.csv"); ;
+            try
+            {
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
         public DonorEntity GetByName(string firstName)
         {
             if (_dataContext.donors == null)
                 return null;
-            return _dataContext.donors.Find(d => d.FirstName == firstName);
+            return _dataContext.donors.Find(firstName);
         }
     }
 }

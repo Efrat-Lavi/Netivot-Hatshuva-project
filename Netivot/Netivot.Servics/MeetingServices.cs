@@ -8,38 +8,38 @@ using System.Threading.Tasks;
 
 namespace Netivot.Service
 {
-    public class MeetingServices:IService<MeetingEntity>
+    public class MeetingServices:IMeetingService
     {
         readonly IRepository<MeetingEntity> _iRepository;
         public MeetingServices(IRepository<MeetingEntity> iRepository)
         {
             _iRepository = iRepository;
         }
-        public List<MeetingEntity> GetAll()
+        public List<MeetingEntity> GetAllMeetings()
         {
             return _iRepository.GetAll();
         }
-        public MeetingEntity GetById(int id)
+        public MeetingEntity GetMeetingById(int id)
         {
             return _iRepository.GetById(id);
 
         }
-        public bool Add(MeetingEntity meeting)
+        public bool AddMeeting(MeetingEntity meeting)
         {
             return _iRepository.Add(meeting);
 
         }
-        public bool Update(int id, MeetingEntity meeting)
+        public bool UpdateMeeting(int id, MeetingEntity meeting)
         {
             return _iRepository.Update(id, meeting);
 
         }
-        public bool Delete(int id)
+        public bool DeleteMeeting(int id)
         {
             return _iRepository.Delete(id);
 
         }
-        public MeetingEntity GetByName(string firstName)
+        public MeetingEntity GetMeetingByName(string firstName)
         {
             return _iRepository.GetByName(firstName);
 

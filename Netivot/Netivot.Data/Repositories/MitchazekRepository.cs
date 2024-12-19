@@ -18,53 +18,67 @@ namespace Netivot.Data.Repositories
  
         public List<MitchazekEntity> GetAll()
         {
-            return _dataContext.mitchazkim;
+            return _dataContext.mitchazkim.ToList();
         }
         public MitchazekEntity GetById(int id)
         {
             if (_dataContext.mitchazkim == null)
                 return null;
-            return _dataContext.mitchazkim.Find(m => m.Id == id);
+            return _dataContext.mitchazkim.Find(id);
         }
         public bool Add(MitchazekEntity mitchazek)
         {
-            if (_dataContext.mitchazkim == null)
-                _dataContext.mitchazkim = new List<MitchazekEntity>();
-            if (mitchazek == null || _dataContext.mitchazkim.Exists(m => m.Id == mitchazek.Id))
+
+            if (mitchazek == null || _dataContext.mitchazkim.Find(mitchazek.Id) != null)
                 return false;
             _dataContext.mitchazkim.Add(new MitchazekEntity(mitchazek));
-            return _dataContext.Save<MitchazekEntity>(_dataContext.mitchazkim, "Mitchazkim.csv"); ;
+            try
+            {
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
         public bool Update(int id, MitchazekEntity mitchazek)
         {
             if (_dataContext.mitchazkim == null || mitchazek == null)
                 return false;
-            int i = _dataContext.mitchazkim.FindIndex(m => m.Id == id);
-            if (i == -1)
+            MitchazekEntity m = _dataContext.mitchazkim.Find(id);
+            if (m == null)
                 return false;
-            _dataContext.mitchazkim[i].FirstName = mitchazek.FirstName;
-            _dataContext.mitchazkim[i].LastName = mitchazek.LastName;
-            _dataContext.mitchazkim[i].Gender = mitchazek.Gender;
-            _dataContext.mitchazkim[i].Age = mitchazek.Age;
-            _dataContext.mitchazkim[i].Email = mitchazek.Email;
-            _dataContext.mitchazkim[i].PhoneNumber = mitchazek.PhoneNumber;
-            _dataContext.mitchazkim[i].SpiritualState = mitchazek.SpiritualState;
-            _dataContext.mitchazkim[i].MaritalStatus = mitchazek.MaritalStatus;
-            _dataContext.mitchazkim[i].PreferredDay = mitchazek.PreferredDay;
-            return _dataContext.Save<MitchazekEntity>(_dataContext.mitchazkim, "Mitchazkim.csv"); ;
+            m.FirstName = mitchazek.FirstName;
+            m.LastName = mitchazek.LastName;
+            m.Gender = mitchazek.Gender;
+            m.Age = mitchazek.Age;
+            m.Email = mitchazek.Email;
+            m.PhoneNumber = mitchazek.PhoneNumber;
+            m.SpiritualState = mitchazek.SpiritualState;
+            m.MaritalStatus = mitchazek.MaritalStatus;
+            m.PreferredDay = mitchazek.PreferredDay;
+            try
+            {
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
         public bool Delete(int id)
         {
-            if (_dataContext.mitchazkim == null || !_dataContext.mitchazkim.Exists(m => m.Id == id))
+            if (_dataContext.mitchazkim == null || _dataContext.mitchazkim.Find(id)==null)
                 return false;
             _dataContext.mitchazkim.Remove(GetById(id));
-            return _dataContext.Save<MitchazekEntity>(_dataContext.mitchazkim, "Mitchazkim.csv"); ;
+            try
+            {
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
         public MitchazekEntity GetByName(string name)
         {
             if (_dataContext.mitchazkim == null)
                 return null;
-            return _dataContext.mitchazkim.Find(m => m.FirstName == name);
+            return _dataContext.mitchazkim.Find(name);
         }
 
     }

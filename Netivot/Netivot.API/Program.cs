@@ -8,12 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
-builder.Services.AddSingleton<DataContext>();
-builder.Services.AddScoped<IService<AvrechEntity>, AvrechServices>();
-builder.Services.AddScoped<IService<DonationEntity>, DonationServices>();
-builder.Services.AddScoped<IService<DonorEntity>, DonorServices>();
-builder.Services.AddScoped<IService<MeetingEntity>, MeetingServices>();
-builder.Services.AddScoped<IService<MitchazekEntity>, MitchazekServices>();
+builder.Services.AddDbContext<DataContext>();
+//builder.Services.AddSingleton<DataContext>();
+builder.Services.AddScoped<IAvrechService, AvrechServices>();
+builder.Services.AddScoped<IDonationService, DonationServices>();
+builder.Services.AddScoped<IDonorService, DonorServices>();
+builder.Services.AddScoped<IMeetingService, MeetingServices>();
+builder.Services.AddScoped<IMitchazekService, MitchazekServices>();
 builder.Services.AddScoped<IRepository<AvrechEntity>, AvrechRepository>();
 builder.Services.AddScoped<IRepository<DonationEntity>, DonationRepository>();
 builder.Services.AddScoped<IRepository<DonorEntity>, DonorRepository>();

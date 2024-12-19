@@ -9,8 +9,8 @@ namespace Netivot.API.Controllers
     [ApiController]
     public class AvrechController : ControllerBase
     {
-        readonly IService<AvrechEntity> _iService;
-        public AvrechController(IService<AvrechEntity> iService)
+        readonly IAvrechService _iService;
+        public AvrechController(IAvrechService iService)
         {
             _iService = iService;
         }
@@ -18,7 +18,7 @@ namespace Netivot.API.Controllers
         [HttpGet]
         public ActionResult<List<AvrechEntity>> Get()
         {
-            List<AvrechEntity> avrechim = _iService.GetAll();
+            List<AvrechEntity> avrechim = _iService.GetAllAvrechim();
             if (avrechim == null)
                 return NotFound();
             return avrechim;
@@ -28,7 +28,7 @@ namespace Netivot.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<AvrechEntity> Get(int id)
         {
-            AvrechEntity mitchazek = _iService.GetById(id);
+            AvrechEntity mitchazek = _iService.GetAvrechById(id);
             if (mitchazek == null)
                 return NotFound();
             return mitchazek;
@@ -38,7 +38,7 @@ namespace Netivot.API.Controllers
         [HttpPost]
         public ActionResult<bool> Post([FromBody] AvrechEntity value)
         {
-            bool isSuccess = _iService.Add(value);
+            bool isSuccess = _iService.AddAvrech(value);
             return isSuccess ? true : false;
         }
 
@@ -46,7 +46,7 @@ namespace Netivot.API.Controllers
         [HttpPut("{id}")]
         public ActionResult<bool> Put(int id, [FromBody] AvrechEntity value)
         {
-            bool isSuccess = _iService.Update(id, value);
+            bool isSuccess = _iService.UpdateAvrech(id, value);
             return isSuccess ? true : false;
         }
 
@@ -54,7 +54,7 @@ namespace Netivot.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(int id)
         {
-            bool isSuccess = _iService.Delete(id);
+            bool isSuccess = _iService.DeleteAvrech(id);
             return isSuccess ? true : false;
         }
     }

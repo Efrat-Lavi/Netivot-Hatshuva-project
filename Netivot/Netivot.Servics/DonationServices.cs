@@ -8,38 +8,38 @@ using System.Threading.Tasks;
 
 namespace Netivot.Service
 {
-    public class DonationServices:IService<DonationEntity>
+    public class DonationServices:IDonationService
     {
         readonly IRepository<DonationEntity> _iRepository;
         public DonationServices(IRepository<DonationEntity> iRepository)
         {
             _iRepository = iRepository;
         }
-        public List<DonationEntity> GetAll()
+        public List<DonationEntity> GetAllDonations()
         {
             return _iRepository.GetAll();
         }
-        public DonationEntity GetById(int id)
+        public DonationEntity GetDonationById(int id)
         {
             return _iRepository.GetById(id);
 
         }
-        public bool Add(DonationEntity donation)
+        public bool AddDonation(DonationEntity donation)
         {
             return _iRepository.Add(donation);
 
         }
-        public bool Update(int id, DonationEntity donation)
+        public bool UpdateDonation(int id, DonationEntity donation)
         {
             return _iRepository.Update(id, donation);
 
         }
-        public bool Delete(int id)
+        public bool DeleteDonation(int id)
         {
             return _iRepository.Delete(id);
 
         }
-        public DonationEntity GetByName(string firstName)
+        public DonationEntity GetDonationByName(string firstName)
         {
             return _iRepository.GetByName(firstName);
 

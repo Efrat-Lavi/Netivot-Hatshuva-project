@@ -8,38 +8,38 @@ using System.Threading.Tasks;
 
 namespace Netivot.Service
 {
-    public class MitchazekServices:IService<MitchazekEntity>
+    public class MitchazekServices:IMitchazekService
     {
         readonly IRepository<MitchazekEntity> _iRepository;
         public MitchazekServices(IRepository<MitchazekEntity> iRepository)
         {
             _iRepository = iRepository;
         }
-        public List<MitchazekEntity> GetAll()
+        public List<MitchazekEntity> GetAllMitchazkim()
         {
             return _iRepository.GetAll();
         }
-        public MitchazekEntity GetById(int id)
+        public MitchazekEntity GetMitchazekById(int id)
         {
             return _iRepository.GetById(id);
 
         }
-        public bool Add(MitchazekEntity mitchazek)
+        public bool AddMitchazek(MitchazekEntity mitchazek)
         {
             return _iRepository.Add(mitchazek);
 
         }
-        public bool Update(int id, MitchazekEntity mitchazek)
+        public bool UpdateMitchazek(int id, MitchazekEntity mitchazek)
         {
             return _iRepository.Update(id, mitchazek);
 
         }
-        public bool Delete(int id)
+        public bool DeleteMitchazek(int id)
         {
             return _iRepository.Delete(id);
 
         }
-        public MitchazekEntity GetByName(string firstName)
+        public MitchazekEntity GetMitchazekByName(string firstName)
         {
             return _iRepository.GetByName(firstName);
 

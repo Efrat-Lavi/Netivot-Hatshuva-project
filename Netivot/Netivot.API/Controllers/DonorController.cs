@@ -9,8 +9,8 @@ namespace Netivot.API.Controllers
     [ApiController]
     public class DonorController : Controller
     {
-        readonly IService<DonorEntity> _iService;
-        public DonorController(IService<DonorEntity> iService)
+        readonly IDonorService _iService;
+        public DonorController(IDonorService iService)
         {
             _iService = iService;
         }
@@ -18,7 +18,7 @@ namespace Netivot.API.Controllers
         [HttpGet]
         public ActionResult<List<DonorEntity>> Get()
         {
-            List<DonorEntity> donors = _iService.GetAll();
+            List<DonorEntity> donors = _iService.GetAllDonors();
             if (donors == null)
                 return NotFound();
             return donors;
@@ -28,7 +28,7 @@ namespace Netivot.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<DonorEntity> Get(int id)
         {
-            DonorEntity donor = _iService.GetById(id);
+            DonorEntity donor = _iService.GetDonorById(id);
             if (donor == null)
                 return NotFound();
             return donor;
@@ -38,7 +38,7 @@ namespace Netivot.API.Controllers
         [HttpPost]
         public ActionResult<bool> Post([FromBody] DonorEntity value)
         {
-            bool isSuccess = _iService.Add(value);
+            bool isSuccess = _iService.AddDonor(value);
             return isSuccess ? true : false;
         }
 
@@ -46,7 +46,7 @@ namespace Netivot.API.Controllers
         [HttpPut("{id}")]
         public ActionResult<bool> Put(int id, [FromBody] DonorEntity value)
         {
-            bool isSuccess = _iService.Update(id, value);
+            bool isSuccess = _iService.UpdateDonor(id, value);
             return isSuccess ? true : false;
         }
 
@@ -54,7 +54,7 @@ namespace Netivot.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(int id)
         {
-            bool isSuccess = _iService.Delete(id);
+            bool isSuccess = _iService.DeleteDonor(id);
             return isSuccess ? true : false;
         }
     }

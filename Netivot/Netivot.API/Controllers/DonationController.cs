@@ -9,8 +9,8 @@ namespace Netivot.API.Controllers
     public class DonationController : Controller
     {
         // GET: DonationController
-        readonly IService<DonationEntity> _iService;
-        public DonationController(IService<DonationEntity> iService)
+        readonly IDonationService _iService;
+        public DonationController(IDonationService iService)
         {
             _iService = iService;
         }
@@ -18,7 +18,7 @@ namespace Netivot.API.Controllers
         [HttpGet]
         public ActionResult<List<DonationEntity>> Get()
         {
-            List<DonationEntity> donations = _iService.GetAll();
+            List<DonationEntity> donations = _iService.GetAllDonations();
             if (donations == null)
                 Console.WriteLine("***");
             //if (donations == null)
@@ -32,7 +32,7 @@ namespace Netivot.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<DonationEntity> Get(int id)
         {
-            DonationEntity donation = _iService.GetById(id);
+            DonationEntity donation = _iService.GetDonationById(id);
             if (donation == null)
                 return NotFound();
             return donation;
@@ -42,7 +42,7 @@ namespace Netivot.API.Controllers
         [HttpPost]
         public ActionResult<bool> Post([FromBody] DonationEntity value)
         {
-            bool isSuccess = _iService.Add(value);
+            bool isSuccess = _iService.AddDonation(value);
             return isSuccess ? true : false;
         }
 
@@ -50,7 +50,7 @@ namespace Netivot.API.Controllers
         [HttpPut("{id}")]
         public ActionResult<bool> Put(int id, [FromBody] DonationEntity value)
         {
-            bool isSuccess = _iService.Update(id, value);
+            bool isSuccess = _iService.UpdateDonation(id, value);
             return isSuccess ? true : false;
         }
 
@@ -58,7 +58,7 @@ namespace Netivot.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(int id)
         {
-            bool isSuccess = _iService.Delete(id);
+            bool isSuccess = _iService.DeleteDonation(id);
             return isSuccess ? true : false;
         }
     }

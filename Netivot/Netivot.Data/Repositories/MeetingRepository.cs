@@ -19,49 +19,63 @@ namespace Netivot.Data.Repositories
 
         public List<MeetingEntity> GetAll()
         {
-            return _dataContext.meetings;
+            return _dataContext.meetings.ToList();
         }
         public MeetingEntity GetById(int id)
         {
             if (_dataContext.meetings == null)
                 return null;
-            return _dataContext.meetings.Find(m => m.Id == id);
+            return _dataContext.meetings.ToList().Find(m => m.Id == id);
         }
         public bool Add(MeetingEntity meeting)
         {
-            if (_dataContext.meetings == null)
-                _dataContext.meetings = new List<MeetingEntity>();
-            if (meeting == null || _dataContext.meetings.Exists(m => m.Id == meeting.Id))
+
+            if (meeting == null || _dataContext.meetings.Find(meeting.Id) != null)
                 return false;
             _dataContext.meetings.Add(new MeetingEntity(meeting));
-            return _dataContext.Save<MeetingEntity>(_dataContext.meetings, "Meetings.csv"); ;
+            try
+            {
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
         public bool Update(int id, MeetingEntity meeting)
         {
             if (_dataContext.meetings == null || meeting == null)
                 return false;
-            int i = _dataContext.meetings.FindIndex(m => m.Id == id);
-            if (i == -1)
+            MeetingEntity m = _dataContext.meetings.Find(id);
+            if (m == null)
                 return false;
-            _dataContext.meetings[i].Date = meeting.Date;
-            _dataContext.meetings[i].AvrechId = meeting.AvrechId;
-            _dataContext.meetings[i].MitchazekId = meeting.MitchazekId;
-            _dataContext.meetings[i].Subject = meeting.Subject;
-            return _dataContext.Save<MeetingEntity>(_dataContext.meetings, "Meetings.csv"); ;
+            m.Date = meeting.Date;
+            m.AvrechId = meeting.AvrechId;
+            m.MitchazekId = meeting.MitchazekId;
+            m.Subject = meeting.Subject;
+            try
+            {
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
         public bool Delete(int id)
         {
-            if (_dataContext.meetings == null || !_dataContext.meetings.Exists(m => m.Id == id))
+            if (_dataContext.meetings == null || _dataContext.meetings.Find(id) == null)
                 return false;
             _dataContext.meetings.Remove(GetById(id));
-            return _dataContext.Save<MeetingEntity>(_dataContext.meetings, "Meetings.csv"); ;
+            try
+            {
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
         public MeetingEntity GetByName(string name)
         {
             if (_dataContext.meetings == null)
                 return null;
             DateTime date = DateTime.ParseExact(name, "ddMMyy", System.Globalization.CultureInfo.InvariantCulture);
-            return _dataContext.meetings.Find(m => m.Date == date);
+            return _dataContext.meetings.Find(date);
         }
 
 

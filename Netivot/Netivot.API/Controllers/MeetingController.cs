@@ -9,15 +9,15 @@ namespace Netivot.API.Controllers
     public class MeetingController : Controller
     {
         // GET: MeetingController
-        readonly IService<MeetingEntity> _iService;
-        public MeetingController(IService<MeetingEntity> iService)
+        readonly IMeetingService _iService;
+        public MeetingController(IMeetingService iService)
         {
             _iService = iService;
         }        // GET: api/<MeetingController>
         [HttpGet]
         public ActionResult<List<MeetingEntity>> Get()
         {
-            List<MeetingEntity> meetings = _iService.GetAll();
+            List<MeetingEntity> meetings = _iService.GetAllMeetings();
             if (meetings == null)
                 return NotFound();
             return meetings;
@@ -27,7 +27,7 @@ namespace Netivot.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<MeetingEntity> Get(int id)
         {
-            MeetingEntity meetings = _iService.GetById(id);
+            MeetingEntity meetings = _iService.GetMeetingById(id);
             if (meetings == null)
                 return NotFound();
             return meetings;
@@ -37,7 +37,7 @@ namespace Netivot.API.Controllers
         [HttpPost]
         public ActionResult<bool> Post([FromBody] MeetingEntity value)
         {
-            bool isSuccess = _iService.Add(value);
+            bool isSuccess = _iService.AddMeeting(value);
             return isSuccess ? true : false;
         }
 
@@ -45,7 +45,7 @@ namespace Netivot.API.Controllers
         [HttpPut("{id}")]
         public ActionResult<bool> Put(int id, [FromBody] MeetingEntity value)
         {
-            bool isSuccess = _iService.Update(id, value);
+            bool isSuccess = _iService.UpdateMeeting(id, value);
             return isSuccess ? true : false;
         }
 
@@ -53,7 +53,7 @@ namespace Netivot.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(int id)
         {
-            bool isSuccess = _iService.Delete(id);
+            bool isSuccess = _iService.DeleteMeeting(id);
             return isSuccess ? true : false;
         }
     }
