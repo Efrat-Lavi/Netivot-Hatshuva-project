@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Netivot.Core.Interfaces
 {
-    internal interface IRepositoryManager
+    public interface IRepositoryManager
     {
+        void save();
     }
 }

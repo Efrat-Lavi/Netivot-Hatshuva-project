@@ -13,6 +13,5 @@ namespace Netivot.Core.Interfaces
         bool Add(T t);
         bool Update(int id, T t);
         bool Delete(int id);
-        T GetByName(string firstName);
     }
 }
