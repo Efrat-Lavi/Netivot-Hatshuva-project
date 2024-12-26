@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netivot.Core.Interfaces
+namespace Netivot.Core.Interfaces.IServices
 {
     public interface IAvrechService
     {
@@ -14,7 +14,7 @@ namespace Netivot.Core.Interfaces
         bool AddAvrech(AvrechEntity t);
         bool UpdateAvrech(int id, AvrechEntity t);
         bool DeleteAvrech(int id);
-        AvrechEntity GetAvrechByName(string firstName);
-        
+        //AvrechEntity GetAvrechByName(string firstName);
+
     }
 }

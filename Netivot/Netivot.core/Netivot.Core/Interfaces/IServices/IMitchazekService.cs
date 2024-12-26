@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netivot.Core.Interfaces
+namespace Netivot.Core.Interfaces.IServices
 {
     public interface IMitchazekService
     {
@@ -14,7 +14,7 @@ namespace Netivot.Core.Interfaces
         bool AddMitchazek(MitchazekEntity t);
         bool UpdateMitchazek(int id, MitchazekEntity t);
         bool DeleteMitchazek(int id);
-        MitchazekEntity GetMitchazekByName(string firstName);
-        
+        //MitchazekEntity GetMitchazekByName(string firstName);
+
     }
 }

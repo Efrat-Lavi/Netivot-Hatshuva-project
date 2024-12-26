@@ -14,16 +14,15 @@ namespace Netivot.Data.Repositories
     public class Repository<T>:IRepository<T> where T : class
     {
         private readonly DbSet<T> _dbSet;
-        private readonly RepositoryManager _manager;
-        public Repository(DataContext context,RepositoryManager _manager)
+        public Repository(DataContext context)
         {
             _dbSet = context.Set<T>();
-            this._manager = _manager;
         }
-        public List<T> GetAll()
-        {
-            return _dbSet.ToList();
-        }
+   
+        //public List<T> GetAll()
+        //{
+        //    return _dbSet.Include(t=>t.).ToList();
+        //}
         public T GetById(int id)
         {
             if (_dbSet == null)
@@ -35,10 +34,11 @@ namespace Netivot.Data.Repositories
 
             //if (t == null || _dbSet.Find(t.Id) != null)
             //    return false;
-            _dbSet.Add(t);
+            
             try
             {
-                _manager.save();
+            _dbSet.Add(t);
+
                 return true;
             }
             catch { return false; }
@@ -63,22 +63,18 @@ namespace Netivot.Data.Repositories
                     property.SetValue(existingEntity, updatedValue);
                 }
             }
-            try
-            {
-                _manager.save();
-                return true;
-            }
-            catch { return false; }
+            return true;
+
 
         }
         public bool Delete(int id)
         {
             if (_dbSet == null || _dbSet.Find(id) == null)
                 return false;
-            _dbSet.Remove(GetById(id));
             try
             {
-                _manager.save();
+            _dbSet.Remove(GetById(id));
+
                 return true;
             }
             catch { return false; }

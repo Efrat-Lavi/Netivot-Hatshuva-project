@@ -1,5 +1,6 @@
 ﻿using Netivot.Core.Entities;
 using Netivot.Core.Interfaces;
+using Netivot.Core.Interfaces.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +11,45 @@ namespace Netivot.Service
 {
     public class MeetingServices:IMeetingService
     {
-        readonly IRepository<MeetingEntity> _iRepository;
-        public MeetingServices(IRepository<MeetingEntity> iRepository)
+        readonly IRepositoryManager _iRepository;
+        public MeetingServices(IRepositoryManager repository)
         {
-            _iRepository = iRepository;
+            _iRepository = repository;
         }
         public List<MeetingEntity> GetAllMeetings()
         {
-            return _iRepository.GetAll();
+            return _iRepository._meetingRepository.GetFull();
         }
         public MeetingEntity GetMeetingById(int id)
         {
-            return _iRepository.GetById(id);
+            return _iRepository._meetingRepository.GetById(id);
 
         }
         public bool AddMeeting(MeetingEntity meeting)
         {
-            return _iRepository.Add(meeting);
-
+            bool succeed = _iRepository._meetingRepository.Add(meeting);
+            if (succeed)
+                _iRepository.save();
+            return succeed;
         }
         public bool UpdateMeeting(int id, MeetingEntity meeting)
         {
-            return _iRepository.Update(id, meeting);
-
+            bool succeed = _iRepository._meetingRepository.Update(id,meeting);
+            if (succeed)
+                _iRepository.save();
+            return succeed;
         }
         public bool DeleteMeeting(int id)
         {
-            return _iRepository.Delete(id);
-
+            bool succeed = _iRepository._meetingRepository.Delete(id);
+            if (succeed)
+                _iRepository.save();
+            return succeed;
         }
-        public MeetingEntity GetMeetingByName(string firstName)
-        {
-            return _iRepository.GetByName(firstName);
+        //public MeetingEntity GetMeetingByName(string firstName)
+        //{
+        //    return _iRepository.GetByName(firstName);
 
-        }
+        //}
     }
 }

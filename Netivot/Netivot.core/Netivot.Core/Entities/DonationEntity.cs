@@ -13,6 +13,7 @@ namespace Netivot.Core.Entities
 
         public int Id { get; set; }
         public int IdDonor { get; set; }
+        public DonorEntity Donor { get; set; }
         public DateTime Date { get; set; }
         public double Sum { get; set; }
         public ActiveStatusEnum DonationStatus { get; set; }

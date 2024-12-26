@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Netivot.Core.Entities;
-using Netivot.Core.Interfaces;
+using Netivot.Core.Interfaces.IServices;
 
 namespace Netivot.API.Controllers
 {

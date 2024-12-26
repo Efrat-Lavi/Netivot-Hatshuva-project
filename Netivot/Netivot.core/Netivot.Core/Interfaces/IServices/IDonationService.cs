@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netivot.Core.Interfaces
+namespace Netivot.Core.Interfaces.IServices
 {
     public interface IDonationService
     {
@@ -14,7 +14,7 @@ namespace Netivot.Core.Interfaces
         bool AddDonation(DonationEntity t);
         bool UpdateDonation(int id, DonationEntity t);
         bool DeleteDonation(int id);
-        DonationEntity GetDonationByName(string firstName);
-        
+        //DonationEntity GetDonationByName(string firstName);
+
     }
 }

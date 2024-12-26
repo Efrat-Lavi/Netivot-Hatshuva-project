@@ -1,7 +1,9 @@
 ﻿using Netivot.Core.Entities;
 using Netivot.Core.Interfaces;
+using Netivot.Core.Interfaces.IServices;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,39 +12,46 @@ namespace Netivot.Service
 {
     public class DonorServices:IDonorService
     {
-        readonly IRepository<DonorEntity> _iRepository;
-        public DonorServices(IRepository<DonorEntity> iRepository)
+        readonly IRepositoryManager _iRepository;
+        public DonorServices(IRepositoryManager repository)
         {
-            _iRepository = iRepository;
+            _iRepository = repository;
         }
         public List<DonorEntity> GetAllDonors()
         {
-            return _iRepository.GetAll();
+            return _iRepository._donorRepository.GetFull();
         }
         public DonorEntity GetDonorById(int id)
         {
-            return _iRepository.GetById(id);
+            return _iRepository._donorRepository.GetById(id);
 
         }
         public bool AddDonor(DonorEntity donor)
         {
-            return _iRepository.Add(donor);
+            bool succeed = _iRepository._donorRepository.Add(donor);
+            if (succeed)
+                _iRepository.save();
+            return succeed;
 
         }
         public bool UpdateDonor(int id, DonorEntity donor)
         {
-            return _iRepository.Update(id, donor);
-
+            bool succeed = _iRepository._donorRepository.Update(id,donor);
+            if (succeed)
+                _iRepository.save();
+            return succeed;
         }
         public bool DeleteDonor(int id)
         {
-            return _iRepository.Delete(id);
-
+            bool succeed = _iRepository._donorRepository.Delete(id);
+            if (succeed)
+                _iRepository.save();
+            return succeed;
         }
-        public DonorEntity GetDonorByName(string firstName)
-        {
-            return _iRepository.GetByName(firstName);
+        //public DonorEntity GetDonorByName(string firstName)
+        //{
+        //    return _iRepository.GetByName(firstName);
 
-        }
+        //}
     }
 }

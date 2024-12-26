@@ -10,9 +10,11 @@ namespace Netivot.Core.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public int AvrechId { get; set; }
-        public int MitchazekId { get; set; }
+        //public int AvrechId { get; set; }
         public string Subject { get; set; }
+        public int MitchazekId { get; set; }
+        public MitchazekEntity Mitchazek { get; set; }
+        
 
         public MeetingEntity()
         {
@@ -22,7 +24,6 @@ namespace Netivot.Core.Entities
         {
             Id = id;
             Date = date;
-            AvrechId = avrech;
             MitchazekId = mitchazek;
             Subject = subject;
         }
@@ -31,7 +32,6 @@ namespace Netivot.Core.Entities
         {
             Id = other.Id;
             Date = other.Date;
-            AvrechId = other.AvrechId;
             MitchazekId = other.MitchazekId;
             Subject = other.Subject;
         }

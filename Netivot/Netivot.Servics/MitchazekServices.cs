@@ -1,5 +1,6 @@
 ﻿using Netivot.Core.Entities;
 using Netivot.Core.Interfaces;
+using Netivot.Core.Interfaces.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +11,46 @@ namespace Netivot.Service
 {
     public class MitchazekServices:IMitchazekService
     {
-        readonly IRepository<MitchazekEntity> _iRepository;
-        public MitchazekServices(IRepository<MitchazekEntity> iRepository)
+        readonly IRepositoryManager _iRepository;
+        public MitchazekServices(IRepositoryManager repository)
         {
-            _iRepository = iRepository;
+            _iRepository = repository;
         }
         public List<MitchazekEntity> GetAllMitchazkim()
         {
-            return _iRepository.GetAll();
+            return _iRepository._mitchazekRepository.GetFull();
         }
         public MitchazekEntity GetMitchazekById(int id)
         {
-            return _iRepository.GetById(id);
+            return _iRepository._mitchazekRepository.GetById(id);
 
         }
         public bool AddMitchazek(MitchazekEntity mitchazek)
         {
-            return _iRepository.Add(mitchazek);
-
+            bool succeed = _iRepository._mitchazekRepository.Add(mitchazek);
+            if (succeed)
+                _iRepository.save();
+            return succeed;
         }
         public bool UpdateMitchazek(int id, MitchazekEntity mitchazek)
         {
-            return _iRepository.Update(id, mitchazek);
+            bool succeed = _iRepository._mitchazekRepository.Update(id,mitchazek);
+            if (succeed)
+                _iRepository.save();
+            return succeed;
 
         }
         public bool DeleteMitchazek(int id)
         {
-            return _iRepository.Delete(id);
-
+            bool succeed = _iRepository._mitchazekRepository.Delete(id);
+            if (succeed)
+                _iRepository.save();
+            return succeed;
         }
-        public MitchazekEntity GetMitchazekByName(string firstName)
-        {
-            return _iRepository.GetByName(firstName);
+        //public MitchazekEntity GetMitchazekByName(string firstName)
+        //{
+        //    return _iRepository.GetByName(firstName);
 
-        }
+        //}
     }
 }

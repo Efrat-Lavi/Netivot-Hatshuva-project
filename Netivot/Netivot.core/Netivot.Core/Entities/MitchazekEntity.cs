@@ -19,7 +19,9 @@ namespace Netivot.Core.Entities
         public SpiritualStateEnum SpiritualState { get; set; }
         public MatirialStatusEnum MaritalStatus { get; set; }
         public DaysEnum PreferredDay { get; set; }
-
+        public int AvrechId { get; set; }
+        public AvrechEntity Avrech { get; set; }
+        public List<MeetingEntity> Meetings { get; set; }
         public MitchazekEntity()
         {
         }

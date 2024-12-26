@@ -19,6 +19,7 @@ namespace Netivot.Core.Entities
         public string PhoneNumber { get; set; }
         public WorkStatusEnum WorkStatus { get; set; }
         public DaysEnum JobDay { get; set; }
+        public List<MitchazekEntity> Mitchazkim { get; set; }
 
         public AvrechEntity()
         {

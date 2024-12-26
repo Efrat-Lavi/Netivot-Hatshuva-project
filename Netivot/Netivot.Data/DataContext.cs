@@ -21,11 +21,16 @@ namespace Netivot.Data
         public DbSet<MeetingEntity> meetings { get; set; }
         public DbSet<MitchazekEntity> mitchazkim { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    //optionsBuilder.UseSqlServer(@"Server=DESKTOP-JIPBU2P\MSSQLSERVER02;Database=netivot_db;Integrated Security=True;");
+        //} 
+
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-JIPBU2P\MSSQLSERVER02;Database=netivot_db;Integrated Security=True;");
-        } 
+        }
+
     }
-   
-    
+
+
 }

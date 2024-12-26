@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Netivot.Data;
 
@@ -11,9 +12,10 @@ using Netivot.Data;
 namespace Netivot.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241223142035_fixManager")]
+    partial class fixManager
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,9 +79,6 @@ namespace Netivot.Data.Migrations
                     b.Property<int>("DonationStatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("DonorId")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdDonor")
                         .HasColumnType("int");
 
@@ -87,8 +86,6 @@ namespace Netivot.Data.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DonorId");
 
                     b.ToTable("donations");
                 });
@@ -135,6 +132,9 @@ namespace Netivot.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AvrechId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -146,8 +146,6 @@ namespace Netivot.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MitchazekId");
 
                     b.ToTable("meetings");
                 });
@@ -161,9 +159,6 @@ namespace Netivot.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AvrechId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -195,57 +190,7 @@ namespace Netivot.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AvrechId");
-
                     b.ToTable("mitchazkim");
-                });
-
-            modelBuilder.Entity("Netivot.Core.Entities.DonationEntity", b =>
-                {
-                    b.HasOne("Netivot.Core.Entities.DonorEntity", "Donor")
-                        .WithMany("Donations")
-                        .HasForeignKey("DonorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Donor");
-                });
-
-            modelBuilder.Entity("Netivot.Core.Entities.MeetingEntity", b =>
-                {
-                    b.HasOne("Netivot.Core.Entities.MitchazekEntity", "Mitchazek")
-                        .WithMany("Meetings")
-                        .HasForeignKey("MitchazekId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Mitchazek");
-                });
-
-            modelBuilder.Entity("Netivot.Core.Entities.MitchazekEntity", b =>
-                {
-                    b.HasOne("Netivot.Core.Entities.AvrechEntity", "Avrech")
-                        .WithMany("Mitchazkim")
-                        .HasForeignKey("AvrechId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Avrech");
-                });
-
-            modelBuilder.Entity("Netivot.Core.Entities.AvrechEntity", b =>
-                {
-                    b.Navigation("Mitchazkim");
-                });
-
-            modelBuilder.Entity("Netivot.Core.Entities.DonorEntity", b =>
-                {
-                    b.Navigation("Donations");
-                });
-
-            modelBuilder.Entity("Netivot.Core.Entities.MitchazekEntity", b =>
-                {
-                    b.Navigation("Meetings");
                 });
 #pragma warning restore 612, 618
         }

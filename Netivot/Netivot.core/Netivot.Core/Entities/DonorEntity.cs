@@ -16,7 +16,7 @@ namespace Netivot.Core.Entities
         public int PhoneNumber { get; set; }
         public ActiveStatusEnum DonorStatus { get; set; }
         public DateTime LastDonation { get; set; }
-
+        public List<DonationEntity> Donations { get; set; }
         public DonorEntity()
         {
         }

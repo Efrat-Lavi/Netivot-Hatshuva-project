@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netivot.Core.Interfaces
+namespace Netivot.Core.Interfaces.IServices
 {
     public interface IMeetingService
     {
@@ -14,7 +14,7 @@ namespace Netivot.Core.Interfaces
         bool AddMeeting(MeetingEntity t);
         bool UpdateMeeting(int id, MeetingEntity t);
         bool DeleteMeeting(int id);
-        MeetingEntity GetMeetingByName(string firstName);
-        
+        //MeetingEntity GetMeetingByName(string firstName);
+
     }
 }
