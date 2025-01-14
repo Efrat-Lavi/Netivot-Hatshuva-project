@@ -10,6 +10,5 @@ namespace Netivot.Core.Interfaces.IRepositories
     public interface IAvrechRepository:IRepository<AvrechEntity>
     {
         List<AvrechEntity> GetFull();
-
     }
 }

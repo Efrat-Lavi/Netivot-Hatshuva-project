@@ -24,7 +24,6 @@ namespace Netivot.Service
         public AvrechEntity GetAvrechById(int id)
         {
             return _iRepository._avrechRepository.GetById(id);
-
         }
         public bool AddAvrech(AvrechEntity avrech)
         {

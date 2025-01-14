@@ -13,7 +13,7 @@ namespace Netivot.Data.Repositories
 {
     public class Repository<T>:IRepository<T> where T : class
     {
-        private readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> _dbSet;
         public Repository(DataContext context)
         {
             _dbSet = context.Set<T>();

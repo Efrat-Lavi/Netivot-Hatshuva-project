@@ -12,15 +12,14 @@ namespace Netivot.Data.Repositories
 {
     public class AvrechRepository:Repository<AvrechEntity>, IAvrechRepository
     {
-        readonly DbSet<AvrechEntity> _dbset;
         public AvrechRepository(DataContext dataContext)
             : base(dataContext)
         {
-            _dbset = dataContext.Set<AvrechEntity>();
+           
         }
         public List<AvrechEntity> GetFull()
         {
-            return _dbset.Include(a => a.Mitchazkim).ToList();
+            return _dbSet.Include(a => a.Mitchazkim).ToList();
         }
         //private readonly DataContext _dataContext;
         //public AvrechRepository(DataContext context)

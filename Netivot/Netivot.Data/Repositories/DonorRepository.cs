@@ -13,15 +13,13 @@ namespace Netivot.Data.Repositories
 {
     public class DonorRepository:Repository<DonorEntity>,IDonorRepository
     {
-        readonly DbSet<DonorEntity> _dbset;
         public DonorRepository(DataContext dataContext)
             : base(dataContext)
         {
-            _dbset = dataContext.Set<DonorEntity>();
         }
         public List<DonorEntity> GetFull()
         {
-            return _dbset.Include(d => d.Donations).ToList();
+            return _dbSet.Include(d => d.Donations).ToList();
         }
         //private readonly DataContext _dataContext;
         //public DonorRepository(DataContext context)

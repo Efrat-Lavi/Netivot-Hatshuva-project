@@ -12,15 +12,13 @@ namespace Netivot.Data.Repositories
 {
     public class MeetingRepository : Repository<MeetingEntity>,IMeetingRepository
     {
-        readonly DbSet<MeetingEntity> _dbset;
         public MeetingRepository(DataContext dataContext)
             : base(dataContext)
         {
-            _dbset = dataContext.Set<MeetingEntity>();
         }
         public List<MeetingEntity> GetFull()
         {
-            return _dbset.Include(m=>m.Mitchazek).ToList();
+            return _dbSet.Include(m=>m.Mitchazek).ToList();
         }
         //private readonly DataContext _dataContext;
         //public MeetingRepository(DataContext context)

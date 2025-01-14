@@ -12,15 +12,13 @@ namespace Netivot.Data.Repositories
 {
     public class MitchazekRepository : Repository<MitchazekEntity>,IMitchazekRepoisitory
     {
-        readonly DbSet<MitchazekEntity> _dbset;
         public MitchazekRepository(DataContext dataContext)
             : base(dataContext)
         {
-            _dbset = dataContext.Set<MitchazekEntity>();
         }
         public List<MitchazekEntity> GetFull()
         {
-            return _dbset.Include(m => m.Meetings).Include(m=>m.Avrech).ToList();
+            return _dbSet.Include(m => m.Meetings).Include(m=>m.Avrech).ToList();
         }
         //private readonly DataContext _dataContext;
         //public MitchazekRepository(DataContext context)
