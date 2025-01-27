@@ -19,37 +19,25 @@ namespace Netivot.Data.Repositories
             _dbSet = context.Set<T>();
         }
    
-        //public List<T> GetAll()
-        //{
-        //    return _dbSet.Include(t=>t.).ToList();
-        //}
         public T GetById(int id)
         {
             if (_dbSet == null)
                 return null;
             return _dbSet.Find(id);
         }
-        public bool Add(T t)
+        public T Add(T t)
         {
-
-            //if (t == null || _dbSet.Find(t.Id) != null)
-            //    return false;
-            
-            try
-            {
             _dbSet.Add(t);
 
-                return true;
-            }
-            catch { return false; }
+            return t;
         }
-        public bool Update(int id, T t)
+        public T Update(int id, T t)
         {
            
             var existingEntity = _dbSet.Find(id);
             if (existingEntity == null || t == null)
             {
-                return false;
+                return null;
             }
             var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                                       .Where(prop => prop.Name != "Id");
@@ -59,13 +47,9 @@ namespace Netivot.Data.Repositories
                 var updatedValue = property.GetValue(t);
 
                 if (updatedValue != null)
-                {
                     property.SetValue(existingEntity, updatedValue);
-                }
             }
-            return true;
-
-
+            return t;
         }
         public bool Delete(int id)
         {

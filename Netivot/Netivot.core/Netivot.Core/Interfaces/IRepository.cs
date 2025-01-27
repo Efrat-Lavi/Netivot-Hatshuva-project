@@ -8,10 +8,9 @@ namespace Netivot.Core.Interfaces
 {
     public interface IRepository<T>
     {
-        //List<T> GetAll();
         T GetById(int id);
-        bool Add(T t);
-        bool Update(int id, T t);
+        T Add(T t);
+        T Update(int id, T t);
         bool Delete(int id);
     }
 }

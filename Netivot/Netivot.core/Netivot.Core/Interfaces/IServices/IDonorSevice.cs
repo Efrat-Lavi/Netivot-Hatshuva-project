@@ -9,10 +9,10 @@ namespace Netivot.Core.Interfaces.IServices
 {
     public interface IDonorService
     {
-        List<DonorEntity> GetAllDonors();
-        DonorEntity GetDonorById(int id);
-        bool AddDonor(DonorEntity t);
-        bool UpdateDonor(int id, DonorEntity t);
+        IEnumerable<DonorDto> GetAllDonors();
+        DonorDto GetDonorById(int id);
+        DonorDto AddDonor(DonorDto t);
+        DonorDto UpdateDonor(int id, DonorDto t);
         bool DeleteDonor(int id);
         //DonorEntity GetDonorByName(string firstName);
 

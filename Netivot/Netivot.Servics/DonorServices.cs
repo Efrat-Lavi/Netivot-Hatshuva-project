@@ -1,4 +1,5 @@
-﻿using Netivot.Core.Entities;
+﻿using AutoMapper;
+using Netivot.Core.Entities;
 using Netivot.Core.Interfaces;
 using Netivot.Core.Interfaces.IServices;
 using System;
@@ -13,34 +14,49 @@ namespace Netivot.Service
     public class DonorServices:IDonorService
     {
         readonly IRepositoryManager _iRepository;
-        public DonorServices(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+
+        public DonorServices(IRepositoryManager iRepository, IMapper mapper)
         {
-            _iRepository = repository;
+            _iRepository = iRepository;
+            _mapper = mapper;
         }
-        public List<DonorEntity> GetAllDonors()
+        public IEnumerable<DonorDto> GetAllDonors()
         {
-            return _iRepository._donorRepository.GetFull();
+            var donors = _iRepository._donorRepository.GetFull();
+            var donorsDto = _mapper.Map<IEnumerable<DonorDto>>(donors);
+            return donorsDto;
         }
-        public DonorEntity GetDonorById(int id)
+        public DonorDto GetDonorById(int id)
         {
-            return _iRepository._donorRepository.GetById(id);
+            var donor = _iRepository._donorRepository.GetById(id);
+            var donorDto = _mapper.Map<DonorDto>(donor);
+            return donorDto;
 
         }
-        public bool AddDonor(DonorEntity donor)
+        public DonorDto AddDonor(DonorDto donorDto)
         {
-            bool succeed = _iRepository._donorRepository.Add(donor);
-            if (succeed)
+            var donor = _mapper.Map<DonorEntity>(donorDto);
+            donor = _iRepository._donorRepository.Add(donor);
+            if (donor != null)
+            {
                 _iRepository.save();
-            return succeed;
+                return donorDto;
+            }
+            return null;
+        }
+        public DonorDto UpdateDonor(int id, DonorDto donorDto)
+        {
+            var donor = _mapper.Map<DonorEntity>(donorDto);
+            donor = _iRepository._donorRepository.Update(id,donor);
+            if (donor != null)
+            {
+                _iRepository.save();
+                return donorDto;
+            }
+            return null;
+        }
 
-        }
-        public bool UpdateDonor(int id, DonorEntity donor)
-        {
-            bool succeed = _iRepository._donorRepository.Update(id,donor);
-            if (succeed)
-                _iRepository.save();
-            return succeed;
-        }
         public bool DeleteDonor(int id)
         {
             bool succeed = _iRepository._donorRepository.Delete(id);

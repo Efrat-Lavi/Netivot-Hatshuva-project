@@ -15,7 +15,7 @@ namespace Netivot.Core.Entities
         public GenderEnum Gender { get; set; }
         public int Age { get; set; }
         public string Email { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public SpiritualStateEnum SpiritualState { get; set; }
         public MatirialStatusEnum MaritalStatus { get; set; }
         public DaysEnum PreferredDay { get; set; }
@@ -26,7 +26,7 @@ namespace Netivot.Core.Entities
         {
         }
 
-        public MitchazekEntity(int id, string firstName, string lastName, GenderEnum gender, int age, string email, int phoneNumber, SpiritualStateEnum spiritualState, MatirialStatusEnum maritalStatus, DaysEnum preferredDay)
+        public MitchazekEntity(int id, string firstName, string lastName, GenderEnum gender, int age, string email, string phoneNumber, SpiritualStateEnum spiritualState, MatirialStatusEnum maritalStatus, DaysEnum preferredDay)
         {
             Id = id;
             FirstName = firstName;

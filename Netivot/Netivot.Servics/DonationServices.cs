@@ -1,4 +1,5 @@
-﻿using Netivot.Core.Entities;
+﻿using AutoMapper;
+using Netivot.Core.Entities;
 using Netivot.Core.Interfaces;
 using Netivot.Core.Interfaces.IServices;
 using System;
@@ -12,32 +13,47 @@ namespace Netivot.Service
     public class DonationServices:IDonationService
     {
         readonly IRepositoryManager _iRepository;
-        public DonationServices(IRepositoryManager iRepository)
+        private readonly IMapper _mapper;
+
+        public DonationServices(IRepositoryManager iRepository, IMapper mapper)
         {
             _iRepository = iRepository;
+            _mapper = mapper;
         }
-        public List<DonationEntity> GetAllDonations()
+        public IEnumerable<DonationDto> GetAllDonations()
         {
-            return _iRepository._donationRepository.GetFull();
+            var donations = _iRepository._donationRepository.GetFull();
+            var donationsDto = _mapper.Map<IEnumerable<DonationDto>>(donations);
+            return donationsDto;
         }
-        public DonationEntity GetDonationById(int id)
+        public DonationDto GetDonationById(int id)
         {
-            return _iRepository._donationRepository.GetById(id);
+            var donation = _iRepository._donationRepository.GetById(id);
+            var donationDto = _mapper.Map<DonationDto>(donation);   
+            return donationDto;
 
         }
-        public bool AddDonation(DonationEntity donation)
+        public DonationDto AddDonation(DonationDto donationDto)
         {
-            bool succeed = _iRepository._donationRepository.Add(donation);
-            if (succeed)
+            var donation = _mapper.Map<DonationEntity>(donationDto);
+            donation = _iRepository._donationRepository.Add(donation);
+            if (donation != null)
+            {
                 _iRepository.save();
-            return succeed;
+                return donationDto;
+            }
+            return null;
         }
-        public bool UpdateDonation(int id, DonationEntity donation)
+        public DonationDto UpdateDonation(int id, DonationDto donationDto)
         {
-            bool succeed = _iRepository._donationRepository.Update(id, donation);
-            if (succeed)
+            var donation = _mapper.Map<DonationEntity>(donationDto);
+            donation = _iRepository._donationRepository.Update(id, donation);
+            if (donation != null)
+            {
                 _iRepository.save();
-            return succeed;
+                return donationDto;
+            }
+            return null;
         }
         public bool DeleteDonation(int id)
         {

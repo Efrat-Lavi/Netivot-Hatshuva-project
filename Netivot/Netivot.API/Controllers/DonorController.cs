@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Netivot.API.PostModels;
 using Netivot.Core.Entities;
 using Netivot.Core.Interfaces.IServices;
 
@@ -10,25 +12,28 @@ namespace Netivot.API.Controllers
     public class DonorController : Controller
     {
         readonly IDonorService _iService;
-        public DonorController(IDonorService iService)
+        private readonly IMapper _mapper;
+
+        public DonorController(IDonorService iService, IMapper mapper)
         {
             _iService = iService;
+            _mapper = mapper;
         }
         // GET: api/<DonorController>
         [HttpGet]
-        public ActionResult<List<DonorEntity>> Get()
+        public ActionResult<IEnumerable<DonorDto>> Get()
         {
-            List<DonorEntity> donors = _iService.GetAllDonors();
+            var donors = _iService.GetAllDonors();
             if (donors == null)
                 return NotFound();
-            return donors;
+            return Ok(donors);
         }
 
         // GET api/<DonorController>/5
         [HttpGet("{id}")]
-        public ActionResult<DonorEntity> Get(int id)
+        public ActionResult<DonorDto> Get(int id)
         {
-            DonorEntity donor = _iService.GetDonorById(id);
+            DonorDto donor = _iService.GetDonorById(id);
             if (donor == null)
                 return NotFound();
             return donor;
@@ -36,18 +41,24 @@ namespace Netivot.API.Controllers
 
         // POST api/<DonorController>
         [HttpPost]
-        public ActionResult<bool> Post([FromBody] DonorEntity value)
+        public ActionResult<bool> Post([FromBody] DonorPostModel donorPostModel)
         {
-            bool isSuccess = _iService.AddDonor(value);
-            return isSuccess ? true : false;
+            DonorDto donorDto = _mapper.Map<DonorDto>(donorPostModel);
+            donorDto = _iService.AddDonor(donorDto);
+            if (donorDto == null)
+                return NotFound();
+            return Ok(donorDto);
         }
 
         // PUT api/<DonorController>/5
         [HttpPut("{id}")]
-        public ActionResult<bool> Put(int id, [FromBody] DonorEntity value)
+        public ActionResult<bool> Put(int id, [FromBody] DonorPostModel donorPostModel)
         {
-            bool isSuccess = _iService.UpdateDonor(id, value);
-            return isSuccess ? true : false;
+            DonorDto donorDto = _mapper.Map<DonorDto>(donorPostModel);
+            donorDto = _iService.UpdateDonor(id, donorDto);
+            if (donorDto == null)
+                return NotFound();
+            return Ok(donorDto);
         }
 
         // DELETE api/<DonorController>/5

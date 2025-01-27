@@ -9,10 +9,10 @@ namespace Netivot.Core.Interfaces.IServices
 {
     public interface IMeetingService
     {
-        List<MeetingEntity> GetAllMeetings();
-        MeetingEntity GetMeetingById(int id);
-        bool AddMeeting(MeetingEntity t);
-        bool UpdateMeeting(int id, MeetingEntity t);
+        IEnumerable<MeetingDto> GetAllMeetings();
+        MeetingDto GetMeetingById(int id);
+        MeetingDto AddMeeting(MeetingDto t);
+        MeetingDto UpdateMeeting(int id, MeetingDto t);
         bool DeleteMeeting(int id);
         //MeetingEntity GetMeetingByName(string firstName);
 

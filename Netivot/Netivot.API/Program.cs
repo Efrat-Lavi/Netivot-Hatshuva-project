@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Netivot.API;
+using Netivot.Core;
 using Netivot.Core.Entities;
 using Netivot.Core.Interfaces;
 using Netivot.Core.Interfaces.IRepositories;
@@ -40,7 +42,7 @@ builder.Services.AddScoped<IDonorRepository, DonorRepository>();
 builder.Services.AddScoped<IMeetingRepository, MeetingRepository>();
 builder.Services.AddScoped<IMitchazekRepoisitory, MitchazekRepository>();
 builder.Services.AddDbContext<DataContext>();
-
+builder.Services.AddAutoMapper(typeof(MappingProfile),typeof(MappgingPostProfile));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

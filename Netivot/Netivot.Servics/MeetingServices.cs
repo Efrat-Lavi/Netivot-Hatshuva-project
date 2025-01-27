@@ -1,4 +1,5 @@
-﻿using Netivot.Core.Entities;
+﻿using AutoMapper;
+using Netivot.Core.Entities;
 using Netivot.Core.Interfaces;
 using Netivot.Core.Interfaces.IServices;
 using System;
@@ -12,32 +13,47 @@ namespace Netivot.Service
     public class MeetingServices:IMeetingService
     {
         readonly IRepositoryManager _iRepository;
-        public MeetingServices(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+
+        public MeetingServices(IRepositoryManager iRepository, IMapper mapper)
         {
-            _iRepository = repository;
+            _iRepository = iRepository;
+            _mapper = mapper;
         }
-        public List<MeetingEntity> GetAllMeetings()
+        public IEnumerable<MeetingDto> GetAllMeetings()
         {
-            return _iRepository._meetingRepository.GetFull();
+            var meetings = _iRepository._meetingRepository.GetFull();
+            var meetingsDto = _mapper.Map<IEnumerable<MeetingDto>>(meetings);
+            return meetingsDto;
         }
-        public MeetingEntity GetMeetingById(int id)
+        public MeetingDto GetMeetingById(int id)
         {
-            return _iRepository._meetingRepository.GetById(id);
+            var meeting = _iRepository._meetingRepository.GetById(id);
+            var meetingDto = _mapper.Map<MeetingDto>(meeting);  
+            return meetingDto;
 
         }
-        public bool AddMeeting(MeetingEntity meeting)
+        public MeetingDto AddMeeting(MeetingDto meetingDto)
         {
-            bool succeed = _iRepository._meetingRepository.Add(meeting);
-            if (succeed)
+            var meeting = _mapper.Map<MeetingEntity>(meetingDto);
+            meeting = _iRepository._meetingRepository.Add(meeting);
+            if (meeting != null)
+            {
                 _iRepository.save();
-            return succeed;
+                return meetingDto;
+            }
+            return null;
         }
-        public bool UpdateMeeting(int id, MeetingEntity meeting)
+        public MeetingDto UpdateMeeting(int id, MeetingDto meetingDto)
         {
-            bool succeed = _iRepository._meetingRepository.Update(id,meeting);
-            if (succeed)
+            var meeting = _mapper.Map<MeetingEntity>(meetingDto);
+            meeting = _iRepository._meetingRepository.Update(id,meeting);
+            if (meeting != null)
+            {
                 _iRepository.save();
-            return succeed;
+                return meetingDto;
+            }
+            return null;
         }
         public bool DeleteMeeting(int id)
         {

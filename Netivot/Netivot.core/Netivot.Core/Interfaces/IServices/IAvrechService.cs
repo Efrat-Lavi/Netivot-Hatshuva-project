@@ -9,10 +9,10 @@ namespace Netivot.Core.Interfaces.IServices
 {
     public interface IAvrechService
     {
-        List<AvrechEntity> GetAllAvrechim();
-        AvrechEntity GetAvrechById(int id);
-        bool AddAvrech(AvrechEntity t);
-        bool UpdateAvrech(int id, AvrechEntity t);
+        IEnumerable<AvrechDto> GetAllAvrechim();
+        AvrechDto GetAvrechById(int id);
+        AvrechDto AddAvrech(AvrechDto t);
+        AvrechDto UpdateAvrech(int id, AvrechDto t);
         bool DeleteAvrech(int id);
         //AvrechEntity GetAvrechByName(string firstName);
 

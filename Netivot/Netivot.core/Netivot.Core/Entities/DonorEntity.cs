@@ -13,7 +13,7 @@ namespace Netivot.Core.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public ActiveStatusEnum DonorStatus { get; set; }
         public DateTime LastDonation { get; set; }
         public List<DonationEntity> Donations { get; set; }
@@ -21,7 +21,7 @@ namespace Netivot.Core.Entities
         {
         }
 
-        public DonorEntity(int id, string firstName, string lastName, string email, int phoneNumber, ActiveStatusEnum donorStatus, DateTime lastDonation)
+        public DonorEntity(int id, string firstName, string lastName, string email, string phoneNumber, ActiveStatusEnum donorStatus, DateTime lastDonation)
         {
             Id = id;
             FirstName = firstName;

@@ -1,4 +1,5 @@
-﻿using Netivot.Core.Entities;
+﻿using AutoMapper;
+using Netivot.Core.Entities;
 using Netivot.Core.Interfaces;
 using Netivot.Core.Interfaces.IServices;
 using System;
@@ -12,32 +13,47 @@ namespace Netivot.Service
     public class MitchazekServices:IMitchazekService
     {
         readonly IRepositoryManager _iRepository;
-        public MitchazekServices(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+
+        public MitchazekServices(IRepositoryManager iRepository, IMapper mapper)
         {
-            _iRepository = repository;
+            _iRepository = iRepository;
+            _mapper = mapper;
         }
-        public List<MitchazekEntity> GetAllMitchazkim()
+        public IEnumerable<MitchazekDto> GetAllMitchazkim()
         {
-            return _iRepository._mitchazekRepository.GetFull();
+            var mitchazkim = _iRepository._mitchazekRepository.GetFull();
+            var mitchazkimDto = _mapper.Map<IEnumerable<MitchazekDto>>(mitchazkim);
+            return mitchazkimDto;
         }
-        public MitchazekEntity GetMitchazekById(int id)
+        public MitchazekDto GetMitchazekById(int id)
         {
-            return _iRepository._mitchazekRepository.GetById(id);
+            var mitchazek = _iRepository._mitchazekRepository.GetById(id);
+            var mitchazekDto = _mapper.Map<MitchazekDto>(mitchazek);
+            return mitchazekDto;
 
         }
-        public bool AddMitchazek(MitchazekEntity mitchazek)
+        public MitchazekDto AddMitchazek(MitchazekDto mitchazekDto)
         {
-            bool succeed = _iRepository._mitchazekRepository.Add(mitchazek);
-            if (succeed)
+            var mitchazek = _mapper.Map<MitchazekEntity>(mitchazekDto);
+            mitchazek = _iRepository._mitchazekRepository.Add(mitchazek);
+            if (mitchazek != null)
+            {
                 _iRepository.save();
-            return succeed;
+                return mitchazekDto;
+            }
+            return null;
         }
-        public bool UpdateMitchazek(int id, MitchazekEntity mitchazek)
+        public MitchazekDto UpdateMitchazek(int id, MitchazekDto mitchazekDto)
         {
-            bool succeed = _iRepository._mitchazekRepository.Update(id,mitchazek);
-            if (succeed)
+            var mitchazek = _mapper.Map<MitchazekEntity>(mitchazekDto);
+            mitchazek = _iRepository._mitchazekRepository.Update(id,mitchazek);
+            if (mitchazek != null)
+            {
                 _iRepository.save();
-            return succeed;
+                return mitchazekDto;
+            }
+            return null;
 
         }
         public bool DeleteMitchazek(int id)

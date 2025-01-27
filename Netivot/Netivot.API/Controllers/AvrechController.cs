@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Netivot.API.PostModels;
 using Netivot.Core.Entities;
 using Netivot.Core.Interfaces.IServices;
 
@@ -10,44 +12,54 @@ namespace Netivot.API.Controllers
     public class AvrechController : ControllerBase
     {
         readonly IAvrechService _iService;
-        public AvrechController(IAvrechService iService)
+        private readonly IMapper _mapper;
+
+        public AvrechController(IAvrechService iService,IMapper mapper)
         {
             _iService = iService;
+            _mapper = mapper;
         }
         // GET: api/<AvrechController>
         [HttpGet]
-        public ActionResult<List<AvrechEntity>> Get()
+        public ActionResult<IEnumerable<AvrechDto>> Get()
         {
-            List<AvrechEntity> avrechim = _iService.GetAllAvrechim();
+            var avrechim = _iService.GetAllAvrechim();
             if (avrechim == null)
                 return NotFound();
-            return avrechim;
+            return Ok(avrechim);
         }
 
         // GET api/<AvrechController>/5
         [HttpGet("{id}")]
-        public ActionResult<AvrechEntity> Get(int id)
+        public ActionResult<AvrechDto> Get(int id)
         {
-            AvrechEntity mitchazek = _iService.GetAvrechById(id);
-            if (mitchazek == null)
+            AvrechDto avrech = _iService.GetAvrechById(id);
+            if (avrech == null)
                 return NotFound();
-            return mitchazek;
+            return avrech;
         }
 
         // POST api/<AvrechController>
         [HttpPost]
-        public ActionResult<bool> Post([FromBody] AvrechEntity value)
+        public ActionResult<AvrechDto> Post([FromBody] AvrechPostModel avrechPostModel)
         {
-            bool isSuccess = _iService.AddAvrech(value);
-            return isSuccess ? true : false;
+            AvrechDto avrechDto = _mapper.Map<AvrechDto>(avrechPostModel);
+            avrechDto = _iService.AddAvrech(avrechDto);
+            if(avrechDto == null)
+                return NotFound();
+            return Ok(avrechDto);
+
         }
 
         // PUT api/<AvrechController>/5
         [HttpPut("{id}")]
-        public ActionResult<bool> Put(int id, [FromBody] AvrechEntity value)
+        public ActionResult<bool> Put(int id, [FromBody] AvrechPostModel avrechPostModel)
         {
-            bool isSuccess = _iService.UpdateAvrech(id, value);
-            return isSuccess ? true : false;
+            AvrechDto avrechDto = _mapper.Map<AvrechDto>(avrechPostModel);
+            avrechDto = _iService.UpdateAvrech(id, avrechDto);
+            if (avrechDto == null)
+                return NotFound();
+            return Ok(avrechDto);
         }
 
         // DELETE api/<AvrechController>/5

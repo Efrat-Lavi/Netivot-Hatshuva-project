@@ -1,4 +1,6 @@
-﻿using Netivot.Core.Entities;
+﻿using AutoMapper;
+using Netivot.Core;
+using Netivot.Core.Entities;
 using Netivot.Core.Interfaces;
 using Netivot.Core.Interfaces.IServices;
 using System;
@@ -11,34 +13,46 @@ namespace Netivot.Service
 {
     public class AvrechServices : IAvrechService
     {
-        readonly IRepositoryManager _iRepository;
-        public AvrechServices(IRepositoryManager iRepository)
+        private readonly IRepositoryManager _iRepository;
+        private readonly IMapper _mapper;
+        public AvrechServices(IRepositoryManager iRepository,IMapper mapper)
         {
             _iRepository = iRepository;
+            _mapper  = mapper;
         }
-        public List<AvrechEntity> GetAllAvrechim()
+        public IEnumerable<AvrechDto> GetAllAvrechim()
         {
-            //return _iRepository._avrechRepository.GetAll();
-            return _iRepository._avrechRepository.GetFull();
+            var avrechim = _iRepository._avrechRepository.GetFull();
+            var avrechimDto = _mapper.Map<IEnumerable<AvrechDto>>(avrechim);
+            return avrechimDto;
         }
-        public AvrechEntity GetAvrechById(int id)
+        public AvrechDto GetAvrechById(int id)
         {
-            return _iRepository._avrechRepository.GetById(id);
+            var avrech = _iRepository._avrechRepository.GetById(id);
+            var avrechimDto = _mapper.Map<AvrechDto>(avrech);
+            return avrechimDto;
         }
-        public bool AddAvrech(AvrechEntity avrech)
+        public AvrechDto AddAvrech(AvrechDto avrechDto)
         {
-            bool succeed= _iRepository._avrechRepository.Add(avrech);
-            if (succeed)
+            var avrechEntity = _mapper.Map<AvrechEntity>(avrechDto);
+            avrechEntity =  _iRepository._avrechRepository.Add(avrechEntity);
+            if (avrechEntity != null)
+            {
                 _iRepository.save();
-            return succeed;
-
+                return avrechDto;
+            }
+            return null;
         }
-        public bool UpdateAvrech(int id, AvrechEntity avrech)
+        public AvrechDto UpdateAvrech(int id, AvrechDto avrechDto)
         {
-            bool succeed = _iRepository._avrechRepository.Update(id, avrech);
-            if (succeed)
+            var avrechEntity = _mapper.Map<AvrechEntity>(avrechDto);
+            avrechEntity = _iRepository._avrechRepository.Update(id, avrechEntity);
+            if (avrechEntity != null)
+            {
                 _iRepository.save();
-            return succeed;
+                return avrechDto;
+            }
+            return null;
         }
         public bool DeleteAvrech(int id)
         {
